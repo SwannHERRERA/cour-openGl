@@ -35,6 +35,15 @@ void reshape(int w,int h);                      // visualisation
 void update(int value);                         // mise à jour: appelle Timer pour l'animation de la sc�ne
 void keyboard(unsigned char key, int x, int y); // fonction clavier
 
+void update(int value) {
+	angle += 2.0;
+	if (angle > 360) {
+		angle = 0.0;
+	}
+	glutPostRedisplay();
+	glutTimerFunc(10 ,update, 0);
+}
+
 
 /* Programme principal */
 int main(int argc,       // argc: nombre d'arguments, argc vaut au moins 1
@@ -56,6 +65,8 @@ int main(int argc,       // argc: nombre d'arguments, argc vaut au moins 1
     glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
 	glutKeyboardFunc(keyboard);
+
+	glutTimerFunc(20, update, 0);
 
 	/* rq: le callback de fonction (fonction de rappel) est une fonction qui est pass�e en argument � une
 	autre fonction. Ici, le main fait usage des deux fonctions de rappel (qui fonctionnent en m�me temps)
@@ -114,7 +125,7 @@ void display(){
 
 	glPushMatrix();
 		glTranslatef(0.5,0.5,0.5);
-		glRotatef(12, 0.2, 0.4, 0.1);
+		glRotatef(angle, 0.2, 0.4, 0.1);
 		glBegin(GL_QUADS);
 			glColor3f(0.1, 0.3, 0.2);
 			glVertex3f(-0.7,-0.5,0.0);
@@ -139,7 +150,7 @@ void display(){
 
 	glPushMatrix();
 			glTranslatef(1.0,1.0,0.0);
-			glRotatef(10, 1.0, 0.0, 0.0);
+			glRotatef(angle, 1.0, 0.0, 0.0);
 			glBegin(GL_TRIANGLES);
 				glColor3f(0.2, 0.4, 0.7);
 				glVertex3f(-0.5, -0.5, 0.0);
