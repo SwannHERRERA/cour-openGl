@@ -9,14 +9,10 @@
 /*													        */
 /************************************************************/
 /*													        */
-/*  Objectif: afficher des formes 3D et illuminer la scène  */
+/*  Objectif: afficher des formes 3D et illuminer la scï¿½ne  */
 /*													        */
 /************************************************************/
 
-
-
-
-#include<windows.h>
 
 #ifdef __APPLE__
 #include <GLUT/glut.h>
@@ -60,13 +56,13 @@ int main(int argc,  char **argv){
 	glutTimerFunc (20,update, 0);
 	glutKeyboardFunc(keyboard);
 
-	/* Entrée dans la boucle principale de glut, traitement des évènements */
+	/* Entrï¿½e dans la boucle principale de glut, traitement des ï¿½vï¿½nements */
     glutMainLoop();
     return 0;
 }
 
 
-/* Initialisation d'OpenGL pour le rendu de la scène */
+/* Initialisation d'OpenGL pour le rendu de la scï¿½ne */
 void initRendering() {
 
     /* Active le z-buffer */
@@ -75,31 +71,31 @@ void initRendering() {
 	/* Activation des couleurs */
 	glEnable(GL_COLOR_MATERIAL);
 
-	/* définit la couleur d'effacement et la couleur de fond */
+	/* dï¿½finit la couleur d'effacement et la couleur de fond */
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 
-	/* Activation des lumières */
+	/* Activation des lumiï¿½res */
 	//glEnable(GL_LIGHTING);          // Activation du mode
-	//glEnable(GL_LIGHT0);            // Activation lumière n°0
-	//glEnable(GL_LIGHT1);            // Activation lumière n°1
-	//glEnable(GL_LIGHT2);            // Activation lumière n°2
+	//glEnable(GL_LIGHT0);            // Activation lumiï¿½re nï¿½0
+	//glEnable(GL_LIGHT1);            // Activation lumiï¿½re nï¿½1
+	//glEnable(GL_LIGHT2);            // Activation lumiï¿½re nï¿½2
 
-	/* Les normales (crées par glNormal(*)) sont automatiquement unitaires */
+	/* Les normales (crï¿½es par glNormal(*)) sont automatiquement unitaires */
 	glEnable(GL_NORMALIZE);
 
 
 	/* Activation du mode ombrage (shading) et lissage (smooth) des couleur */
 	glShadeModel(GL_SMOOTH);
 
-	/*  définit la taille d'un pixel*/
+	/*  dï¿½finit la taille d'un pixel*/
 	glPointSize(2.0);
 
 }
 
-/* Création de la scène avec lampes */
+/* Crï¿½ation de la scï¿½ne avec lampes */
 void display(void){
 
-	/* Déclaration des couleurs et positions des lampes */
+	/* Dï¿½claration des couleurs et positions des lampes */
 	GLfloat ambientColor[] = {0.2f, 0.2f, 0.2f, 1.0f};   // Color (0.2, 0.2, 0.2)
 
 	GLfloat lightColor0[] = {0.5f, 0.5f, 0.5f, 1.0f};    // Color (0.5, 0.5, 0.5)
@@ -109,7 +105,7 @@ void display(void){
 	GLfloat lightPos1[] = {-1.0f, 0.5f, 0.5f, 0.0f};     // Coming from the direction (-1, 0.5, 0.5)
 
 
-	/* Déclaration des différents types de matière des sphères */
+	/* Dï¿½claration des diffï¿½rents types de matiï¿½re des sphï¿½res */
 	GLfloat no_mat[] = {0.0, 0.0, 0.0, 1.0};
 	GLfloat mat_ambient_color[] = {0.8, 0.8, 0.2, 1.0};
 	GLfloat mat_diffuse[] = {0.1, 0.5, 0.8, 1.0};
@@ -132,29 +128,29 @@ void display(void){
 
 
 	gluLookAt(0.0, 0.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
-	glTranslatef(0.0f, 0.0f, -5.0f);                      // déplacement caméra
+	glTranslatef(0.0f, 0.0f, -5.0f);                      // dï¿½placement camï¿½ra
 	glColor3f(1.0f, 1.0f, 1.0f);
 
 
-	// Ajout lumière ambiante
+	// Ajout lumiÃ¨re ambiante
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);
 
 
 
 
 
-    	// Ajout lumière positionnelle L0
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor0);        // lumière diffuse
+    	// Ajout lumiï¿½re positionnelle L0
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor0);        // lumiÃ¨re diffuse
 	glLightfv(GL_LIGHT0, GL_POSITION, lightPos0);         // position
 
-	// Ajout lumière positionnelle L1
+	// Ajout lumiï¿½re positionnelle L1
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, lightColor1);
-	glLightfv(GL_LIGHT1, GL_SPECULAR, lightColor1);       // lumiére spéculaire
+	glLightfv(GL_LIGHT1, GL_SPECULAR, lightColor1);       // lumiÃ¨re spÃ©culaire
 	glLightfv(GL_LIGHT1, GL_POSITION, lightPos1);
 
 
 
-	/* Dessine la sphère haut gauche, réflexion diffuse, pas d'ambiante, ni spéculaire*/
+	/* Dessine la sphÃ¨re haut gauche, rÃ©flexion diffuse, pas d'ambiante, ni spÃ©culaire*/
 	glPushMatrix();
 		glTranslatef(-3.0f, 3.0f, 0.0f);
 		glMaterialfv(GL_FRONT, GL_AMBIENT, no_mat);
@@ -165,7 +161,7 @@ void display(void){
 		glutSolidSphere(1.0, 18.0, 18.0);
 	glPopMatrix();
 
-	/* Dessine la sphère haut droit, réflexion diffuse, spéculaire, brillance faible pas d'ambiante*/
+	/* Dessine la sphï¿½re haut droit, rï¿½flexion diffuse, spï¿½culaire, brillance faible pas d'ambiante*/
 	glPushMatrix();
 		glTranslatef(3.0f, 3.0f, 0.0f);
 		glMaterialfv(GL_FRONT, GL_AMBIENT, no_mat);
@@ -176,7 +172,7 @@ void display(void){
 		glutSolidSphere(1.0, 18.0, 18.0);
 	glPopMatrix();
 
-	/* Dessine la sphère bas droit, réflexion diffuse, spéculaire, brillance élevée pas d'ambiante*/
+	/* Dessine la sphï¿½re bas droit, rï¿½flexion diffuse, spï¿½culaire, brillance ï¿½levï¿½e pas d'ambiante*/
 	glPushMatrix();
 		glTranslatef(3.0f, -3.0f, 0.0f);
 		glMaterialfv(GL_FRONT, GL_AMBIENT, no_mat);
@@ -188,7 +184,7 @@ void display(void){
 	glPopMatrix();
 
 
-	/* Dessine la sphère bas gauche, réflexion diffuse, émission, pas de réflexion ambiante ou spéculaire*/
+	/* Dessine la sphï¿½re bas gauche, rï¿½flexion diffuse, ï¿½mission, pas de rï¿½flexion ambiante ou spï¿½culaire*/
 	glPushMatrix();
 		glTranslatef(-3.0f, -3.0f, 0.0f);
 		glMaterialfv(GL_FRONT, GL_AMBIENT, no_mat);
@@ -207,7 +203,7 @@ void display(void){
 
 
 
-    /* Dessine un cube scalé en mvt */
+    /* Dessine un cube scalï¿½ en mvt */
 	glPushMatrix();
 	glRotatef(angle, 0.0f, 1.0f, 0.0f);
 	glColor3f(1.0f, 1.0f, 0.0f);
@@ -258,7 +254,7 @@ void display(void){
 }
 
 
-/* Fonction de mise à jour: mouvements des objets*/
+/* Fonction de mise ï¿½ jour: mouvements des objets*/
 void update(int value){
 	angle += 0.2;
 	if (angle > 360){
@@ -274,7 +270,7 @@ void update(int value){
 }
 
 
-/*  Mise en forme de la scène pour l'affichage */
+/*  Mise en forme de la scï¿½ne pour l'affichage */
 void reshape(int w, int h){
 	glViewport(0, 0,(GLsizei) w, (GLsizei) h);
     glMatrixMode(GL_PROJECTION);
@@ -288,11 +284,11 @@ void reshape(int w, int h){
 
 
 
-/* Fonction de gestion au clavier des activations des lumières */
+/* Fonction de gestion au clavier des activations des lumiï¿½res */
 void keyboard(unsigned char key, int x, int y) {
 		switch (key){
 
-			case 'a':   /* activation lumière n°0 */
+			case 'a':   /* activation lumiï¿½re nï¿½0 */
 				glEnable(GL_LIGHTING);
 				glEnable(GL_LIGHT0);
 				glDisable(GL_LIGHT1);
@@ -300,7 +296,7 @@ void keyboard(unsigned char key, int x, int y) {
 				glutPostRedisplay();
 				break;
 
-			case 'b':   /* activation lumière n°1*/
+			case 'b':   /* activation lumiï¿½re nï¿½1*/
 				glEnable(GL_LIGHTING);
 				glDisable(GL_LIGHT0);
 				glEnable(GL_LIGHT1);
@@ -308,14 +304,14 @@ void keyboard(unsigned char key, int x, int y) {
 				break;
 
 
-			case 'l':   /* activation des lumières  */
+			case 'l':   /* activation des lumiï¿½res  */
 				glEnable(GL_LIGHTING);
 				glEnable(GL_LIGHT0);
 				glEnable(GL_LIGHT1);
 				glutPostRedisplay();
 				break;
 
-			case 'L':   /* désactivation des lumières  */
+			case 'L':   /* dï¿½sactivation des lumiï¿½res  */
 				glDisable(GL_LIGHTING);
 				glutPostRedisplay();
 				break;
