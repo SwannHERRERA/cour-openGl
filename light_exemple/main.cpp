@@ -27,6 +27,7 @@
 
 
 float angle = 0.0;
+float angleL2 = 0.0;
 
 
 /* prototypes de fonctions */
@@ -80,7 +81,7 @@ void initRendering() {
 	//glEnable(GL_LIGHT1);            // Activation lumi�re n�1
 	//glEnable(GL_LIGHT2);            // Activation lumi�re n�2
 
-	/* Les normales (cr�es par glNormal(*)) sont automatiquement unitaires */
+	/* Les normales (crées par glNormal(*)) sont automatiquement unitaires */
 	glEnable(GL_NORMALIZE);
 
 
@@ -92,10 +93,10 @@ void initRendering() {
 
 }
 
-/* Cr�ation de la sc�ne avec lampes */
+/* Création de la scène avec lampes */
 void display(void){
 
-	/* D�claration des couleurs et positions des lampes */
+	/* Déclaration des couleurs et positions des lampes */
 	GLfloat ambientColor[] = {0.2f, 0.2f, 0.2f, 1.0f};   // Color (0.2, 0.2, 0.2)
 
 	GLfloat lightColor0[] = {0.5f, 0.5f, 0.5f, 1.0f};    // Color (0.5, 0.5, 0.5)
@@ -103,9 +104,12 @@ void display(void){
 
 	GLfloat lightColor1[] = {0.5f, 0.2f, 0.2f, 1.0f};    // Color (0.5, 0.2, 0.2)
 	GLfloat lightPos1[] = {-1.0f, 0.5f, 0.5f, 0.0f};     // Coming from the direction (-1, 0.5, 0.5)
+	
+	GLfloat lightColor2[] = {0.0f, 1.0f, 0.0f, 1.0f};    // Color (0.0, 1.0, 0.0)
+	GLfloat lightPos2[] = {0.0f, 0.0f, 0.0f, 1.0f};     // Coming from the direction (-1, 0.5, 0.5)
 
 
-	/* D�claration des diff�rents types de mati�re des sph�res */
+	/* D�claration des différents types de matière des sphéres */
 	GLfloat no_mat[] = {0.0, 0.0, 0.0, 1.0};
 	GLfloat mat_ambient_color[] = {0.8, 0.8, 0.2, 1.0};
 	GLfloat mat_diffuse[] = {0.1, 0.5, 0.8, 1.0};
@@ -126,28 +130,34 @@ void display(void){
 
 
 
-
 	gluLookAt(0.0, 0.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
-	glTranslatef(0.0f, 0.0f, -5.0f);                      // d�placement cam�ra
+	glTranslatef(0.0f, 0.0f, -5.0f);                      // déplacement caméra
 	glColor3f(1.0f, 1.0f, 1.0f);
-
 
 	// Ajout lumière ambiante
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);
 
 
-
-
-
-    	// Ajout lumi�re positionnelle L0
+    	// Ajout lumière positionnelle L0
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor0);        // lumière diffuse
 	glLightfv(GL_LIGHT0, GL_POSITION, lightPos0);         // position
 
-	// Ajout lumi�re positionnelle L1
+	// Ajout lumière positionnelle L1
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, lightColor1);
 	glLightfv(GL_LIGHT1, GL_SPECULAR, lightColor1);       // lumière spéculaire
 	glLightfv(GL_LIGHT1, GL_POSITION, lightPos1);
 
+	// Ajout lumière positionnelle L2
+	glLightfv(GL_LIGHT2, GL_DIFFUSE, lightColor2);
+	glLightfv(GL_LIGHT2, GL_POSITION, lightPos2);
+
+	glPushMatrix();
+		glRotatef(angleL2, 0.0, 1.0, 0.0);
+		glTranslatef(-3.0f, 0.0f,0.0f);
+		glutWireCube(1.0);
+		glLightfv(GL_LIGHT2, GL_POSITION, lightPos2); 
+		glLightfv(GL_LIGHT2, GL_DIFFUSE, lightColor2);        // lumière diffuse
+	glPopMatrix();
 
 
 	/* Dessine la sphère haut gauche, réflexion diffuse, pas d'ambiante, ni spéculaire*/
@@ -161,7 +171,7 @@ void display(void){
 		glutSolidSphere(1.0, 18.0, 18.0);
 	glPopMatrix();
 
-	/* Dessine la sph�re haut droit, r�flexion diffuse, sp�culaire, brillance faible pas d'ambiante*/
+	/* Dessine la sphère haut droit, réflexion diffuse, spéculaire, brillance faible pas d'ambiante*/
 	glPushMatrix();
 		glTranslatef(3.0f, 3.0f, 0.0f);
 		glMaterialfv(GL_FRONT, GL_AMBIENT, no_mat);
@@ -172,7 +182,7 @@ void display(void){
 		glutSolidSphere(1.0, 18.0, 18.0);
 	glPopMatrix();
 
-	/* Dessine la sph�re bas droit, r�flexion diffuse, sp�culaire, brillance �lev�e pas d'ambiante*/
+	/* Dessine la sphère bas droit, réflexion diffuse, spéculaire, brillance élevée pas d'ambiante*/
 	glPushMatrix();
 		glTranslatef(3.0f, -3.0f, 0.0f);
 		glMaterialfv(GL_FRONT, GL_AMBIENT, no_mat);
@@ -184,7 +194,7 @@ void display(void){
 	glPopMatrix();
 
 
-	/* Dessine la sph�re bas gauche, r�flexion diffuse, �mission, pas de r�flexion ambiante ou sp�culaire*/
+	/* Dessine la sphère bas gauche, réflexion diffuse, émission, pas de réflexion ambiante ou spéculaire*/
 	glPushMatrix();
 		glTranslatef(-3.0f, -3.0f, 0.0f);
 		glMaterialfv(GL_FRONT, GL_AMBIENT, no_mat);
@@ -195,15 +205,7 @@ void display(void){
 		glutSolidSphere(1.0, 18.0, 18.0);
 	glPopMatrix();
 
-
-
-
-
-
-
-
-
-    /* Dessine un cube scal� en mvt */
+    /* Dessine un cube scalé en mvt */
 	glPushMatrix();
 	glRotatef(angle, 0.0f, 1.0f, 0.0f);
 	glColor3f(1.0f, 1.0f, 0.0f);
@@ -211,33 +213,32 @@ void display(void){
 	//glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient_color);
 	//glMaterialfv(GL_FRONT, GL_SHININESS, high_shininess);
 
-
-
-
-
-
-
 	glBegin(GL_QUADS);
 
 	//Front
+	glNormal3f(0.0,0.0,1.0);
 	glVertex3f(-1.5f, -1.0f, 1.5f);
 	glVertex3f(1.5f, -1.0f, 1.5f);
 	glVertex3f(1.5f, 1.0f, 1.5f);
 	glVertex3f(-1.5f, 1.0f, 1.5f);
 
 	//Right
+	
+	glNormal3f(1.0,0.0,0.0);
 	glVertex3f(1.5f, -1.0f, -1.5f);
 	glVertex3f(1.5f, 1.0f, -1.5f);
 	glVertex3f(1.5f, 1.0f, 1.5f);
 	glVertex3f(1.5f, -1.0f, 1.5f);
 
 	//Back
+	glNormal3f(0.0, 0.0, -1.0);
 	glVertex3f(-1.5f, -1.0f, -1.5f);
 	glVertex3f(-1.5f, 1.0f, -1.5f);
 	glVertex3f(1.5f, 1.0f, -1.5f);
 	glVertex3f(1.5f, -1.0f, -1.5f);
 
 	//Left
+	glNormal3f(-1.0, 0.0, 0.0);
 	glVertex3f(-1.5f, -1.0f, -1.5f);
 	glVertex3f(-1.5f, -1.0f, 1.5f);
 	glVertex3f(-1.5f, 1.0f, 1.5f);
@@ -254,31 +255,30 @@ void display(void){
 }
 
 
-/* Fonction de mise � jour: mouvements des objets*/
+/* Fonction de mise à jour: mouvements des objets*/
 void update(int value){
 	angle += 0.2;
 	if (angle > 360){
 		angle -= 360;
 	}
 
-
+	angleL2 += 0.5;
+	if (angleL2 > 360){
+		angleL2 -= 360;
+	}
 
 	glutPostRedisplay();
 	glutTimerFunc(10,update, 0);
-
-
 }
 
 
-/*  Mise en forme de la sc�ne pour l'affichage */
+/*  Mise en forme de la scène pour l'affichage */
 void reshape(int w, int h){
 	glViewport(0, 0,(GLsizei) w, (GLsizei) h);
     glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
 	gluPerspective(60.0, (GLfloat) w / (GLfloat) h, 1.0,	200.0);
-
-
 
 }
 
@@ -299,10 +299,18 @@ void keyboard(unsigned char key, int x, int y) {
 			case 'b':   /* activation lumi�re n�1*/
 				glEnable(GL_LIGHTING);
 				glDisable(GL_LIGHT0);
+				glDisable(GL_LIGHT2);
 				glEnable(GL_LIGHT1);
 				glutPostRedisplay();
 				break;
 
+			case 'c':   /* activation lumi�re n�1*/
+				glEnable(GL_LIGHTING);
+				glDisable(GL_LIGHT0);
+				glDisable(GL_LIGHT1);
+				glEnable(GL_LIGHT2);
+				glutPostRedisplay();
+				break;
 
 			case 'l':   /* activation des lumi�res  */
 				glEnable(GL_LIGHTING);

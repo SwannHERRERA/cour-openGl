@@ -25,7 +25,7 @@
 
 
 
-float angle = 0.0;
+float angle, angle2 = 0.0;
 float cameraAngle = 10.0;
 
 /* prototypes de fonctions */
@@ -39,6 +39,10 @@ void update(int value) {
 	angle += 2.0;
 	if (angle > 360) {
 		angle = 0.0;
+	}
+	angle2 += 1.0;
+	if (angle2 > 360) {
+		angle2 = 0.0;
 	}
 	glutPostRedisplay();
 	glutTimerFunc(10 ,update, 0);
